@@ -4,6 +4,7 @@ import shutil
 import argparse
 
 import cv2
+import numpy
 
 
 def process(args: argparse.Namespace):
@@ -20,7 +21,12 @@ def process(args: argparse.Namespace):
     cv2.namedWindow(window_name, cv2.WINDOW_KEEPRATIO)
     for item in os.listdir(input_dir):
         item_path = os.path.join(input_dir, item)
-        image = cv2.imread(item_path)
+        image_data = numpy.fromfile(item_path, dtype=numpy.uint8)
+        if int(image_data.shape[0]) == 0:
+            continue
+        image = cv2.imdecode(image_data, cv2.IMREAD_COLOR)
+        if image is None:
+            continue
         if image is not None:
             cv2.imshow(window_name, image)
             while True:
