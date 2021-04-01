@@ -33,26 +33,28 @@ def process(args: argparse.Namespace):
                 key = cv2.waitKeyEx(0)
                 if key == 27:
                     exit()
-                elif key == 2490368:
+                elif key == 2621440:
                     target_path = os.path.join(output_positive_dir, item)
-                    print(f"移动文件{item_path}->{target_path}")
+                    print(f"正样本：移动文件{item_path}->{target_path}")
                     shutil.move(item_path, target_path)
                     break
-                elif key == 2621440:
+                elif key == 2490368:
                     target_path = os.path.join(output_negative_dir, item)
-                    print(f"移动文件{item_path}->{target_path}")
+                    print(f"负样本：移动文件{item_path}->{target_path}")
                     shutil.move(item_path, target_path)
                     break
                 else:
                     print("按键错误，只支持上下方向键")
+    print("所有图片标注完成，程序结束")
+    time.sleep(5)
 
 
 if __name__ == '__main__':
     help_message = f"二分类图片标注程序 \n" \
                    f"输入一个文件夹，读取文件夹内所有的图片逐张显示 \n" \
-                   f"输入方向键↑表示正样本，图片被移动到output_positive_dir文件夹 \n" \
-                   f"输入方向键下表示负样本，图片被移动到output_negative_dir文件夹 \n" \
-                   f"ESC结束"
+                   f"输入方向键下↓表示正样本，图片被移动到output_positive_dir文件夹 \n" \
+                   f"输入方向键上↑表示负样本，图片被移动到output_negative_dir文件夹 \n" \
+                   f"按ESC结束"
     parser = argparse.ArgumentParser(description=help_message)
     parser.add_argument("--input_dir", type=str, help="待处理文件夹")
     parser.add_argument("--output_positive_dir", type=str, help="输出正样本文件夹")
